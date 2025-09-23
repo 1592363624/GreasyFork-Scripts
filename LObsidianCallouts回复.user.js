@@ -4,7 +4,7 @@
 // @match       https://linux.do/*
 // @grant       none
 // @license     MIT
-// @version     1.1
+// @version     1.1.1
 // @author      Shell
 // @description 2025-9-23 09:51:48
 // @downloadURL https://update.greasyfork.org/scripts/550344/linuxdo%20Obsidian%20Callouts%E5%9B%9E%E5%A4%8D.user.js
