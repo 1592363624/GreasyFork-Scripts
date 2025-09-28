@@ -4,7 +4,7 @@
 // @match       https://linux.do/*
 // @grant       none
 // @license     MIT
-// @version     1.2.0
+// @version     1.2.1
 // @author      Shell
 // @description 2025-9-28 17:39:58
 // ==/UserScript==
@@ -13,15 +13,55 @@
     'use strict';
 
     // 定义可用的 callout 类型
-    const calloutTypes = {
-        success: { color: '#28a745', icon: '<path d="M5 12l5 5 10-10"/>', label: 'Success' },
-        tip: { color: '#17a2b8', icon: '<path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>', label: 'Tip' },
-        note: { color: '#007bff', icon: '<path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/>', label: 'Note' },
-        warning: { color: '#ffc107', icon: '<path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/>', label: 'Warning' },
-        danger: { color: '#dc3545', icon: '<circle cx="12" cy="12" r="10"/><line x1="15" y1="9" x2="9" y2="15"/><line x1="9" y1="9" x2="15" y2="15"/>', label: 'Danger' },
-        bug: { color: '#dc3545', icon: '<circle cx="12" cy="12" r="10"/><line x1="15" y1="9" x2="9" y2="15"/><line x1="9" y1="9" x2="15" y2="15"/>', label: 'Bug' },
-        info: { color: '#6f42c1', icon: '<circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/>', label: 'Info' }
-    };
+    // 在 calloutTypes 里新增
+const calloutTypes = {
+    success: {
+        color: '#28a745',
+        icon: '<path d="M5 12l5 5 10-10"/>',
+        label: 'Success'
+    },
+    tip: {
+        color: '#17a2b8',
+        icon: '<path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>',
+        label: 'Tip'
+    },
+    note: {
+        color: '#007bff',
+        icon: '<path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/>',
+        label: 'Note'
+    },
+    warning: {
+        color: '#ffc107',
+        icon: '<path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/>',
+        label: 'Warning'
+    },
+    danger: {
+        color: '#dc3545',
+        icon: '<circle cx="12" cy="12" r="10"/><line x1="15" y1="9" x2="9" y2="15"/><line x1="9" y1="9" x2="15" y2="15"/>',
+        label: 'Danger'
+    },
+    info: {
+        color: '#6f42c1',
+        icon: '<circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/>',
+        label: 'Info'
+    },
+    question: {
+        color: '#f0ad4e',
+        icon: '<circle cx="12" cy="12" r="10"/><text x="12" y="16" font-size="12" text-anchor="middle" stroke="white" stroke-width="0.5">?</text>',
+        label: 'Question'
+    },
+    failure: {
+        color: '#800000',
+        icon: '<circle cx="12" cy="12" r="10"/><line x1="15" y1="9" x2="9" y2="15"/><line x1="9" y1="9" x2="15" y2="15"/>',
+        label: 'Failure'
+    },
+    bug: {
+        color: '#e55353',
+        icon: '<circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="16"/><line x1="8" y1="12" x2="16" y2="12"/>',
+        label: 'Bug'
+    }
+};
+
 
     function getDefaultCalloutType() {
         const saved = localStorage.getItem('obsidianCalloutDefaultType');
